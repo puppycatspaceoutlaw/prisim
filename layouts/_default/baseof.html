@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
+    <link rel="icon" type="image/ico" href="{{ "images/icon.webp" |relURL }}">
+    <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+</head>
+<body>
+    <main>
+        {{ block "main" . }}{{ end }}
+    </main>
+
+    <footer>
+        <p>© {{ now.Year }} {{ .Site.Title }}. This work is licensed under a Creative Commons Attribution 4.0 International License. To view a copy of this license, visit <a href="http://creativecommons.org/licenses/by/4.0/">http://creativecommons.org/licenses/by/4.0/</a>
+
+        <p>All content and images are the property of their respective owners. If you have any questions or requests regarding the content, please <a href='https://github.com/puppycatspaceoutlaw/prism'>contact us</a></p>
+    </footer>
+</body>
+</html>

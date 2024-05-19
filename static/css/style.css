@@ -1,0 +1,89 @@
+/* Include Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* Base settings */
+body {
+    background-color: #2b2f3a; /* Dark charcoal blue background */
+    color: #f0f0f0; /* Light grey text for high contrast */
+    font-family: 'Roboto', sans-serif; /* Sans-serif font */
+    margin: 0;
+    padding: 10px;
+    font-size: 16px;
+}
+
+
+/* Headings styled for emphasis */
+h1, h2, h3 {
+    color: #ffffff; /* Slightly brighter white for headings */
+}
+
+/* Links with a subtle blue accent */
+a {
+    color: #4a90e2; /* Soft blue for links */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline; /* Underline on hover for better accessibility */
+}
+
+/* Additional styling for buttons */
+button {
+    background-color: #4a90e2; /* Matching the link color */
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #367bc3; /* Darker shade on hover */
+}
+
+/* Input styling for forms */
+input[type="text"], input[type="email"], textarea {
+    background-color: #40454f; /* Darker background for inputs */
+    border: 1px solid #525960;
+    color: #ffffff;
+    padding: 10px;
+    width: 100%;
+}
+
+input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
+    border-color: #4a90e2; /* Highlight with the link color */
+    outline: none;
+}
+
+.image-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Spacing between images */
+    padding: 0px; /* Padding around the grid */
+    position: relative;
+}
+
+.image-grid div {
+    flex: 1 0 calc(25% - 10px); /* Three items per row, accounting for gap */
+    display: flex;
+    height: 0;
+    padding-top: calc(25% - 10px); /* Height relative to width to maintain aspect ratio */
+    overflow: hidden; /* Keeps images within bounds */
+    position: relative;
+}
+
+.image-grid img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures image covers the area without distortion */
+}
+
+.image-grid .cyclingImage {
+    opacity: 1; 
+    transition: opacity 0.5s ease-in-out;
+}

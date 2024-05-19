@@ -1,0 +1,62 @@
+
+{{ define "main" }}
+<div class="image-grid">
+    {{ range $page := .Pages }}
+        <div class="image-grid-item">
+            <a href="{{ $page.Permalink }}" alt="{{ $page.Title }}" target="_blank">
+                {{ $firstImage := "" }}
+                {{ $images := .Resources.Match "*.{jpg,jpeg,png,webp,gif}" }}
+                {{ $result := slice }}
+                {{ range $index, $image := $images }}
+                    {{ if eq $index 0 }}
+                        {{ $firstImage = $image.RelPermalink }}
+                    {{ end }}
+                    {{ if gt $index 0 }}
+                        {{ $result = print $result ", " $image.RelPermalink }}
+                    {{ else }}
+                        {{ $result = $image.RelPermalink }}
+                    {{ end }}
+                {{ end }}
+                <img class="cyclingImage" src="{{ $firstImage }}" data-images="{{ $result }}" alt="{{ .Name }}">
+                <img class="cyclingImage" src="{{ $firstImage }}" data-images="{{ $result }}" alt="{{ .Name }}">
+            </a>
+        </div>
+    {{ end }}
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const imgElements = document.querySelectorAll('.cyclingImage');
+    
+        imgElements.forEach((imgElement) => {
+            const images = imgElement.getAttribute('data-images').split(', ').map(image => image.trim());
+            
+            if (images.length > 1) {  // Only cycle if there's more than one image
+                let currentIndex = 0;
+    
+                function cycleImages() {
+                    // Fade out the current image
+                    imgElement.style.opacity = 0;
+    
+                    // Change the image after the fade out transition completes
+                    setTimeout(() => {
+                        currentIndex = (currentIndex + 1) % images.length; // Update the index, looping back to 0
+                        imgElement.src = images[currentIndex];
+                        imgElement.style.opacity = 1; // Fade in the new image
+                    }, 200); // This timeout matches the transition duration (0.5s)
+                }
+    
+                // Randomize the initial start time to stagger the image transitions
+                const randomDelay = Math.random() * 5000; // Random delay between 0 and 3 seconds
+    
+                setTimeout(() => {
+                    cycleImages();  // Start cycling immediately after the random delay
+                    setInterval(cycleImages, 3000); // Continue cycling every 3 seconds
+                }, randomDelay);
+            }
+        });
+    });
+    </script>
+    
+    
+    
+{{ end }}
