@@ -6,6 +6,6 @@
 
 2. Run hugo web server
 
-```
+```shell
 hugo server --buildDrafts
 ```
