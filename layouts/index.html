@@ -4,21 +4,32 @@
     {{ range $page := .Pages }}
         <div class="image-grid-item">
             <a href="{{ $page.Permalink }}" alt="{{ $page.Title }}" target="_blank">
-                {{ $firstImage := "" }}
+                {{ $thumbnails := $page.Params.thumbnails }}
                 {{ $images := .Resources.Match "*.{jpg,jpeg,png,webp,gif}" }}
-                {{ $result := slice }}
-                {{ range $index, $image := $images }}
-                    {{ if eq $index 0 }}
-                        {{ $firstImage = $image.RelPermalink }}
+                {{ $displayImages := slice }}
+                {{ $dataImages := slice }}
+
+                {{ if and $thumbnails (gt (len $thumbnails) 0) }}
+                    {{ range $thumbnail := $thumbnails }}
+                        {{ $displayImages = $displayImages | append $thumbnail.url }}
                     {{ end }}
-                    {{ if gt $index 0 }}
-                        {{ $result = print $result ", " $image.RelPermalink }}
-                    {{ else }}
-                        {{ $result = $image.RelPermalink }}
+                {{ else }}
+                    {{ range $image := $images }}
+                        {{ $displayImages = $displayImages | append $image.RelPermalink }}
                     {{ end }}
                 {{ end }}
-                <img class="cyclingImage" src="{{ $firstImage }}" data-images="{{ $result }}" alt="{{ .Name }}">
-                <img class="cyclingImage" src="{{ $firstImage }}" data-images="{{ $result }}" alt="{{ .Name }}">
+
+                {{ range $index, $image := $images }}
+                    {{ if gt $index 0 }}
+                        {{ $dataImages = $dataImages | append $image.RelPermalink }}
+                    {{ end }}
+                {{ end }}
+
+                {{ $dataImagesString := delimit $dataImages ", " }}
+
+                {{ range $index, $displayImage := $displayImages }}
+                    <img class="cyclingImage" src="{{ $displayImage }}" data-images="{{ $dataImagesString }}" alt="{{ $page.Name }}">
+                {{ end }}
             </a>
         </div>
     {{ end }}
