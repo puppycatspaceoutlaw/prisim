@@ -16,7 +16,7 @@
         }
 
         .background-image {
-
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -25,35 +25,21 @@
             background-position: center;
             filter: blur(10px);
             z-index: -1;
-            /* Ensures the background is behind the main image */
         }
-        video {
+
+        video,
+        img {
             position: fixed;
-            /* Fixed position */
             top: 50%;
-            /* Center vertically */
             left: 50%;
-            /* Center horizontally */
             min-width: 100%;
             min-height: 100%;
             width: auto;
             height: auto;
             object-fit: cover;
-            /* Ensures the video covers the viewport */
             transform: translate(-50%, -50%);
-            /* Adjust the position */
             opacity: 0;
-            /* Start with 0 opacity */
             animation: fadeIn 0.5s ease-out forwards;
-            /* Apply the fade-in animation */
-        }
-
-        img {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            height: 100%;
-            transform: translate(-50%, -50%);
             z-index: 1;
         }
 
@@ -70,50 +56,42 @@
 
     <script>
         const mediaContainer = document.getElementById("mediaContainer");
-
         const mediaFiles = {{ .Params.media | jsonify | safeJS }};
+        let currentIndex = 0;
 
         function setBackgroundImage(src) {
             document.getElementById("backgroundImage").style.backgroundImage = `url('${src}')`;
         }
 
-        function init() {
-            let randomMedia = mediaFiles[Math.floor(Math.random() * mediaFiles.length)];
+        function displayMedia(mediaUrl) {
+            const fileExtension = mediaUrl.split('.').pop().toLowerCase();
+            if (fileExtension === 'webm' || fileExtension === 'mp4') {
+                mediaContainer.innerHTML = `<video autoplay muted loop><source src="${mediaUrl}" type="video/${fileExtension}"></video>`;
+            } else {
+                mediaContainer.innerHTML = `<img src="${mediaUrl}" alt="Gallery image" />`;
+            }
+            setBackgroundImage(mediaUrl);
+        }
 
-            if(randomMedia && randomMedia.url) {
+        function init() {
+            currentIndex = Math.floor(Math.random() * mediaFiles.length);
+            let randomMedia = mediaFiles[currentIndex];
+            if (randomMedia && randomMedia.url) {
                 randomMedia = randomMedia.url;
             }
+            displayMedia(randomMedia);
+        }
 
-            const fileExtension = randomMedia.split('.').pop();
-            if (fileExtension === 'webm') {
-                mediaContainer.innerHTML = `<video autoplay muted loop><source src="${randomMedia}" type="video/webm"></video>`;
-            } else {
-                mediaContainer.innerHTML = `<img src="${randomMedia}" class="main-image" />`;
+        function nextMedia() {
+            currentIndex = (currentIndex + 1) % mediaFiles.length;
+            let nextMedia = mediaFiles[currentIndex];
+            if (nextMedia && nextMedia.url) {
+                nextMedia = nextMedia.url;
             }
-            setBackgroundImage(randomMedia);
+            displayMedia(nextMedia);
         }
 
         init();
-
-        function nextMedia() {
-            const currentIndex = mediaFiles.indexOf(mediaContainer.querySelector('img, video').getAttribute('src'));
-            const nextIndex = (currentIndex + 1) % mediaFiles.length;
-            
-            let nextMedia = mediaFiles[nextIndex];
-
-            if(nextMedia && nextMedia.url) {
-                nextMedia = nextMedia.url;
-            }
-
-            const fileExtension = nextMedia.split('.').pop();
-            if (fileExtension === 'webm') {
-                mediaContainer.innerHTML = `<video autoplay muted loop><source src="${nextMedia}" type="video/webm"></video>`;
-            } else {
-                mediaContainer.innerHTML = `<img src="${nextMedia}" class="main-image" />`;
-            }
-            setBackgroundImage(nextMedia);
-        }
-
         document.addEventListener("click", nextMedia);
     </script>
 
