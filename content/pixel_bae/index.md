@@ -14,6 +14,7 @@ thumbnails:
     - url: "https://do9h9xpl264c0.cloudfront.net/objects/8db43440cb08761ef7f7b3cc70a22e258f7fd51e4dde4358ef4a34afe9289f1c"
     - url: "https://do9h9xpl264c0.cloudfront.net/objects/24f195d7147d4609c034193365f0eae6888a080957beddb73a5ae7e5ede56505"
     - url: "https://do9h9xpl264c0.cloudfront.net/objects/49bf151f405cbcc8971c949342bd07edd8211025c937f0b670956986cc1e8814"
+    - url: "https://do9h9xpl264c0.cloudfront.net/objects/f94a1489d1d09ac16fb08f14a8c48017a9f87e48a07a12bcd4127604b72ba0da"
 
 media:
     - url: "https://do9h9xpl264c0.cloudfront.net/objects/a914e604a319c65826f070fffa99f02fe821528a1a9d4551ff2d14fbed9ca74f"
@@ -28,4 +29,5 @@ media:
     - url: "https://do9h9xpl264c0.cloudfront.net/objects/8db43440cb08761ef7f7b3cc70a22e258f7fd51e4dde4358ef4a34afe9289f1c"
     - url: "https://do9h9xpl264c0.cloudfront.net/objects/24f195d7147d4609c034193365f0eae6888a080957beddb73a5ae7e5ede56505"
     - url: "https://do9h9xpl264c0.cloudfront.net/objects/49bf151f405cbcc8971c949342bd07edd8211025c937f0b670956986cc1e8814"
+    - url: "https://do9h9xpl264c0.cloudfront.net/objects/f94a1489d1d09ac16fb08f14a8c48017a9f87e48a07a12bcd4127604b72ba0da"
 ---
