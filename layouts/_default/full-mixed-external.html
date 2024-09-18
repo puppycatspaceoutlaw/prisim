@@ -36,12 +36,50 @@
             z-index: 1;
             opacity: 0;
             animation: fadeIn 0.5s ease-out forwards;
-            z-index: 1;
         }
 
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
+        }
+
+        .preview-container {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 2;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .preview-container.hidden {
+            opacity: 0;
+            transform: translateY(100%);
+        }
+
+        .preview {
+            width: 100px;
+            height: 100px;
+            background-size: cover;
+            background-position: center;
+            border: 2px solid white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
+        }
+
+        #prevPreview {
+            transform: translateX(-10px);
+        }
+
+        #nextPreview {
+            transform: translateX(10px);
+        }
+
+        .preview:hover {
+            transform: scale(1.1);
         }
     </style>
 </head>
@@ -49,11 +87,19 @@
 <body>
     <div id="mediaContainer"></div>
     <div class="background-image" id="backgroundImage"></div>
+    <div class="preview-container" id="previewContainer">
+        <div id="prevPreview" class="preview"></div>
+        <div id="nextPreview" class="preview"></div>
+    </div>
 
     <script>
         const mediaContainer = document.getElementById("mediaContainer");
+        const prevPreview = document.getElementById("prevPreview");
+        const nextPreview = document.getElementById("nextPreview");
+        const previewContainer = document.getElementById("previewContainer");
         const mediaFiles = {{ .Params.media | jsonify | safeJS }};
         let currentIndex = 0;
+        let hidePreviewsTimeout;
 
         function setBackgroundImage(src) {
             document.getElementById("backgroundImage").style.backgroundImage = `url('${src}')`;
@@ -67,6 +113,32 @@
                 mediaContainer.innerHTML = `<img src="${mediaUrl}" alt="Gallery image" />`;
             }
             setBackgroundImage(mediaUrl);
+            updatePreviews();
+            showPreviews();
+        }
+
+        function updatePreviews() {
+            const prevIndex = (currentIndex - 1 + mediaFiles.length) % mediaFiles.length;
+            const nextIndex = (currentIndex + 1) % mediaFiles.length;
+            
+            let prevMedia = mediaFiles[prevIndex];
+            let nextMedia = mediaFiles[nextIndex];
+            
+            if (prevMedia && prevMedia.url) prevMedia = prevMedia.url;
+            if (nextMedia && nextMedia.url) nextMedia = nextMedia.url;
+            
+            prevPreview.style.backgroundImage = `url('${prevMedia}')`;
+            nextPreview.style.backgroundImage = `url('${nextMedia}')`;
+        }
+
+        function showPreviews() {
+            previewContainer.classList.remove('hidden');
+            clearTimeout(hidePreviewsTimeout);
+            hidePreviewsTimeout = setTimeout(hidePreviews, 2000); // Hide after 3 seconds
+        }
+
+        function hidePreviews() {
+            previewContainer.classList.add('hidden');
         }
 
         function init() {
@@ -87,8 +159,37 @@
             displayMedia(nextMedia);
         }
 
+        function previousMedia() {
+            currentIndex = (currentIndex - 1 + mediaFiles.length) % mediaFiles.length;
+            let prevMedia = mediaFiles[currentIndex];
+            if (prevMedia && prevMedia.url) {
+                prevMedia = prevMedia.url;
+            }
+            displayMedia(prevMedia);
+        }
+
+        function handleKeyPress(event) {
+            if (document.hasFocus()) {
+                if (event.key === "ArrowRight") {
+                    nextMedia();
+                } else if (event.key === "ArrowLeft") {
+                    previousMedia();
+                }
+            }
+        }
+
         init();
         document.addEventListener("click", nextMedia);
+        document.addEventListener("keydown", handleKeyPress);
+        document.addEventListener("mousemove", showPreviews);
+        prevPreview.addEventListener("click", (e) => {
+            e.stopPropagation();
+            previousMedia();
+        });
+        nextPreview.addEventListener("click", (e) => {
+            e.stopPropagation();
+            nextMedia();
+        });
     </script>
 
 </body>
