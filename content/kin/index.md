@@ -1,4 +1,4 @@
 ---
 title: "Kin"
-layout: full-image
+layout: full-mixed
 ---

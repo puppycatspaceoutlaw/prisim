@@ -1,4 +1,4 @@
 ---
 title: "Breakcore"
-layout: full-image
+layout: full-mixed
 ---

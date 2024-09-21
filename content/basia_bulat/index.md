@@ -1,4 +1,4 @@
 ---
-title: "Bee and Puppy Cat"
-layout: full-image
+title: "Basia Bulat"
+layout: full-mixed
 ---

@@ -1,4 +1,4 @@
 ---
 title: "snailchan"
-layout: full-image
+layout: full-mixed
 ---

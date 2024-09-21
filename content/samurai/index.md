@@ -1,4 +1,4 @@
 ---
 title: "Samurai"
-layout: full-image
+layout: full-mixed
 ---

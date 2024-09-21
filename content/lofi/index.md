@@ -1,4 +1,4 @@
 ---
 title: "Lofi"
-layout: full-image
+layout: full-mixed
 ---

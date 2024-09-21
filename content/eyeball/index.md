@@ -1,4 +1,4 @@
 ---
 title: "Eyeball"
-layout: full-image
+layout: full-mixed
 ---

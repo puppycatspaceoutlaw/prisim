@@ -1,5 +1,5 @@
 ---
 title: "Ott"
-layout: full-image
+layout: full-mixed
 thumbnail: ott/1.jpg
 ---

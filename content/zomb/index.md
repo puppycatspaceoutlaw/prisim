@@ -1,5 +1,5 @@
 ---
 title: "zomb"
-layout: full-image
+layout: full-mixed
 thumbnail: faces/zomb/1.jpg
 ---

@@ -1,4 +1,4 @@
 ---
 title: "Hyperspace"
-layout: full-image
+layout: full-mixed
 ---
