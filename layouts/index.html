@@ -67,9 +67,15 @@
                     {{ end }}
                 {{ end }}
 
-                {{ range $index, $image := $images }}
-                    {{ if gt $index 0 }}
-                        {{ $dataImages = $dataImages | append $image.RelPermalink }}
+                {{ if and $thumbnails (gt (len $thumbnails) 0) }}
+                    {{ range $thumbnail := $thumbnails }}
+                        {{ $dataImages = $dataImages | append $thumbnail.url }}
+                    {{ end }}
+                {{ else }}
+                    {{ range $index, $image := $images }}
+                        {{ if gt $index 0 }}
+                            {{ $dataImages = $dataImages | append $image.RelPermalink }}
+                        {{ end }}
                     {{ end }}
                 {{ end }}
 
