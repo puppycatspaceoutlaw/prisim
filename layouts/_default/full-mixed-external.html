@@ -69,6 +69,13 @@
             border: 2px solid white;
             box-shadow: 0 0 10px rgba(0,0,0,0.5);
             transition: transform 0.3s ease;
+            overflow: hidden;
+        }
+
+        .preview video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         #prevPreview {
@@ -128,14 +135,31 @@
             if (prevMedia && prevMedia.url) prevMedia = prevMedia.url;
             if (nextMedia && nextMedia.url) nextMedia = nextMedia.url;
             
-            prevPreview.style.backgroundImage = `url('${prevMedia}')`;
-            nextPreview.style.backgroundImage = `url('${nextMedia}')`;
+            updatePreviewElement(prevPreview, prevMedia);
+            updatePreviewElement(nextPreview, nextMedia);
+        }
+
+        function updatePreviewElement(element, mediaUrl) {
+            const fileExtension = mediaUrl.split('.').pop().toLowerCase();
+            element.innerHTML = ''; // Clear previous content
+
+            if (fileExtension === 'webm' || fileExtension === 'mp4') {
+                const video = document.createElement('video');
+                video.src = mediaUrl;
+                video.muted = true;
+                video.loop = true;
+                video.playsInline = true;
+                video.autoplay = true;
+                element.appendChild(video);
+            } else {
+                element.style.backgroundImage = `url('${mediaUrl}')`;
+            }
         }
 
         function showPreviews() {
             previewContainer.classList.remove('hidden');
             clearTimeout(hidePreviewsTimeout);
-            hidePreviewsTimeout = setTimeout(hidePreviews, 2000); // Hide after 3 seconds
+            hidePreviewsTimeout = setTimeout(hidePreviews, 2000); // Hide after 2 seconds
         }
 
         function hidePreviews() {
