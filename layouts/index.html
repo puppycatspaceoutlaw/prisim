@@ -1,8 +1,56 @@
-
 {{ define "main" }}
+<style>
+    .search-container {
+        width: 100%;
+        padding: 20px 0;
+        display: flex;
+        justify-content: center;
+    }
+    #search-input {
+        width: 80%;
+        max-width: 600px;
+        padding: 10px;
+        font-size: 18px;
+        border: 2px solid rgba(255,255,255,0.5);
+        border-radius: 5px;
+    }
+    .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    }
+    .image-grid-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        height: 320px;
+    }
+    .image-grid-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: opacity 0.2s ease-in-out;
+    }
+    .image-grid-item.hidden {
+        display: none;
+    }
+
+    .image-grid .cyclingImage {
+        opacity: 1; 
+        transition: opacity 0.5s ease-in-out;
+    }
+
+</style>
+
+<div class="search-container">
+    <input type="text" id="search-input" placeholder="Search images...">
+</div>
+
 <div class="image-grid">
     {{ range $page := .Pages }}
-        <div class="image-grid-item">
+        <div class="image-grid-item" data-title="{{ $page.Title | lower }}">
             <a href="{{ $page.Permalink }}" alt="{{ $page.Title }}" target="_blank">
                 {{ $thumbnails := $page.Params.thumbnails }}
                 {{ $images := .Resources.Match "*.{jpg,jpeg,png,webp,gif}" }}
@@ -34,40 +82,51 @@
         </div>
     {{ end }}
 </div>
+
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const imgElements = document.querySelectorAll('.cyclingImage');
-    
-        imgElements.forEach((imgElement) => {
-            const images = imgElement.getAttribute('data-images').split(', ').map(image => image.trim());
-            
-            if (images.length > 1) {  // Only cycle if there's more than one image
-                let currentIndex = 0;
-    
-                function cycleImages() {
-                    // Fade out the current image
-                    imgElement.style.opacity = 0;
-    
-                    // Change the image after the fade out transition completes
-                    setTimeout(() => {
-                        currentIndex = (currentIndex + 1) % images.length; // Update the index, looping back to 0
-                        imgElement.src = images[currentIndex];
-                        imgElement.style.opacity = 1; // Fade in the new image
-                    }, 200); // This timeout matches the transition duration (0.5s)
-                }
-    
-                // Randomize the initial start time to stagger the image transitions
-                const randomDelay = Math.random() * 5000; // Random delay between 0 and 3 seconds
-    
+document.addEventListener('DOMContentLoaded', function () {
+    const imgElements = document.querySelectorAll('.cyclingImage');
+    const searchInput = document.getElementById('search-input');
+    const gridItems = document.querySelectorAll('.image-grid-item');
+
+    // Image cycling functionality
+    imgElements.forEach((imgElement) => {
+        const images = imgElement.getAttribute('data-images').split(', ').map(image => image.trim());
+        
+        if (images.length > 1) {
+            let currentIndex = 0;
+
+            function cycleImages() {
+                imgElement.style.opacity = 0;
                 setTimeout(() => {
-                    cycleImages();  // Start cycling immediately after the random delay
-                    setInterval(cycleImages, 3000); // Continue cycling every 3 seconds
-                }, randomDelay);
+                    currentIndex = (currentIndex + 1) % images.length;
+                    imgElement.src = images[currentIndex];
+                    imgElement.style.opacity = 1;
+                }, 200);
+            }
+
+            const randomDelay = Math.random() * 5000;
+
+            setTimeout(() => {
+                cycleImages();
+                setInterval(cycleImages, 3000);
+            }, randomDelay);
+        }
+    });
+
+    // Search functionality
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        
+        gridItems.forEach(item => {
+            const title = item.getAttribute('data-title');
+            if (title.includes(searchTerm)) {
+                item.classList.remove('hidden');
+            } else {
+                item.classList.add('hidden');
             }
         });
     });
-    </script>
-    
-    
-    
+});
+</script>
 {{ end }}

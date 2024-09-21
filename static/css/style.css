@@ -1,4 +1,4 @@
-/* Include Google Font */
+/* Include Google Font2 */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 /* Base settings */
@@ -55,35 +55,4 @@ input[type="text"], input[type="email"], textarea {
 input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
     border-color: #4a90e2; /* Highlight with the link color */
     outline: none;
-}
-
-.image-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px; /* Spacing between images */
-    padding: 0px; /* Padding around the grid */
-    position: relative;
-}
-
-.image-grid div {
-    flex: 1 0 calc(25% - 10px); /* Three items per row, accounting for gap */
-    display: flex;
-    height: 0;
-    padding-top: calc(25% - 10px); /* Height relative to width to maintain aspect ratio */
-    overflow: hidden; /* Keeps images within bounds */
-    position: relative;
-}
-
-.image-grid img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ensures image covers the area without distortion */
-}
-
-.image-grid .cyclingImage {
-    opacity: 1; 
-    transition: opacity 0.5s ease-in-out;
 }
