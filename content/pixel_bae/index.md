@@ -2,6 +2,7 @@
 title: "Pixel Bae"
 layout: full-mixed-external
 thumbnails:
+    - url: "https://do9h9xpl264c0.cloudfront.net/objects/2e7ec340c66fcfed0bdfba8d263af0ca3f0f2b30f62ccd4480f12844f8e25b80"
     - url: "https://do9h9xpl264c0.cloudfront.net/objects/a914e604a319c65826f070fffa99f02fe821528a1a9d4551ff2d14fbed9ca74f"
     - url: "https://do9h9xpl264c0.cloudfront.net/objects/4193f1603a7b4c316f28f295c6cc79e96dd02a50b7f8447bf272b841a8214234"
     - url: "https://do9h9xpl264c0.cloudfront.net/objects/c94e3ec710038e6279c66a06d9d276c5d394bff6604087b84f7c273cb7eb689f"
@@ -34,4 +35,5 @@ media:
     - url: "https://do9h9xpl264c0.cloudfront.net/objects/f94a1489d1d09ac16fb08f14a8c48017a9f87e48a07a12bcd4127604b72ba0da"
     - url: "https://do9h9xpl264c0.cloudfront.net/objects/9709dcba2063faa4702cf7b48e67e8f67e9aa8838292bd70e1468dd61e48d30a"
     - url: "https://do9h9xpl264c0.cloudfront.net/objects/26265e7bdd6e6fb755ce2408ab073e09d301de40987f973ab0bfa8c0e7bc060b"
+    - url: "https://do9h9xpl264c0.cloudfront.net/objects/2e7ec340c66fcfed0bdfba8d263af0ca3f0f2b30f62ccd4480f12844f8e25b80"
 ---
