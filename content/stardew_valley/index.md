@@ -1,5 +1,5 @@
 ---
-title: "Stardew Valley"
+title: "Stardew Valley Bae (Leah, Abigail Haley)"
 layout: full-mixed-external
 thumbnails:
     - url: "https://do9h9xpl264c0.cloudfront.net/objects/fe3d4e4e5c6dfd09fa77b79c6eedac4499055f63a3984712c996ac1a72015b4c"
