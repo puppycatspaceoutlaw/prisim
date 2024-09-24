@@ -13,6 +13,10 @@
             height: 100%;
             overflow: hidden;
             background: {{ .Params.theme.backgroundColor | default "transparent" }};
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
         .background-image {
