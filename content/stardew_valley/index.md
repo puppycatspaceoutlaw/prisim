@@ -16,4 +16,5 @@ media:
     - url: "https://do9h9xpl264c0.cloudfront.net/objects/386c638b8f012dab2aed1f71fad03dc6c85879f5af6794640df4ff4d546279ca"
     - url: "https://do9h9xpl264c0.cloudfront.net/objects/f3c1a52a29a0c5484ba0a2e1266d752f85913d7894468bd7305a048b9ede0a95"
     - url: "https://do9h9xpl264c0.cloudfront.net/objects/c129ab8987420039ff8615da717fa8a6490f360874038d3e042564996ac2b998"
+    - url: "https://do9h9xpl264c0.cloudfront.net/objects/b7daf2afc9f2d0fd907d66abf62bab44bfefd236d922601d220aa92307432792"
 ---
