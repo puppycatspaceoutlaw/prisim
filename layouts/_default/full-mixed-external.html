@@ -167,6 +167,18 @@
         }
 
         function init() {
+            const hash = window.location.hash;
+            if (hash.startsWith('#imageUrl=')) {
+                const imageUrl = decodeURIComponent(hash.slice('#imageUrl='.length));
+                const index = mediaFiles.findIndex(media => (media.url || media) === imageUrl);
+                if (index !== -1) {
+                    currentIndex = index;
+                    displayMedia(imageUrl);
+                    return;
+                }
+            }
+            
+            // Fallback to original behavior if no valid #imageUrl is found
             currentIndex = Math.floor(Math.random() * mediaFiles.length);
             let randomMedia = mediaFiles[currentIndex];
             if (randomMedia && randomMedia.url) {

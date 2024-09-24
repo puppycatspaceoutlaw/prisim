@@ -41,7 +41,6 @@
         opacity: 1; 
         transition: opacity 0.5s ease-in-out;
     }
-
 </style>
 
 <div class="search-container">
@@ -51,7 +50,7 @@
 <div class="image-grid">
     {{ range $page := .Pages }}
         <div class="image-grid-item" data-title="{{ $page.Title | lower }}">
-            <a href="{{ $page.Permalink }}" alt="{{ $page.Title }}" target="_blank">
+            <a href="{{ $page.Permalink }}" class="image-link" alt="{{ $page.Title }}" target="_blank">
                 {{ $thumbnails := $page.Params.thumbnails }}
                 {{ $images := .Resources.Match "*.{jpg,jpeg,png,webp,gif}" }}
                 {{ $displayImages := slice }}
@@ -98,6 +97,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Image cycling functionality
     imgElements.forEach((imgElement) => {
         const images = imgElement.getAttribute('data-images').split(', ').map(image => image.trim());
+        const linkElement = imgElement.closest('a');
+        const baseHref = linkElement.getAttribute('href');
         
         if (images.length > 1) {
             let currentIndex = 0;
@@ -106,7 +107,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 imgElement.style.opacity = 0;
                 setTimeout(() => {
                     currentIndex = (currentIndex + 1) % images.length;
-                    imgElement.src = images[currentIndex];
+                    const newImageUrl = images[currentIndex];
+                    imgElement.src = newImageUrl;
+                    linkElement.href = `${baseHref}#imageUrl=${encodeURIComponent(newImageUrl)}`;
                     imgElement.style.opacity = 1;
                 }, 200);
             }
@@ -117,6 +120,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 cycleImages();
                 setInterval(cycleImages, 3000);
             }, randomDelay);
+        } else if (images.length === 1) {
+            // If there's only one image, set the href once
+            linkElement.href = `${baseHref}#imageUrl=${encodeURIComponent(imgElement.src)}`;
         }
     });
 
