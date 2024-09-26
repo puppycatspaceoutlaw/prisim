@@ -7,5 +7,5 @@ thumbnails:
 
 media:
     - url: "https://do9h9xpl264c0.cloudfront.net/objects/192968e9102416bc2addd309b7e0d37d59c085af2a3e56ef4c2623fa02d3276d?format=.webm"
-    - url: "https://do9h9xpl264c0.cloudfront.net/objects/23a228af2872d8308e7601ab1c5a7028c56a3b10a97a470dc3b53a7492b05009?format=.webm"
+    - url: "https://do9h9xpl264c0.cloudfront.net/objects/57f42c8ebecdac61dc6960720d18b4bc182f9988b605c6b2ab102b88abc10bf2?format=.webm"
 ---
