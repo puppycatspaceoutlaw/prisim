@@ -1,8 +1,6 @@
 ---
 title: "Dancing Bae"
 layout: full-mixed-external
-theme:
-    backgroundColor: black
 thumbnails:
     - url: "https://do9h9xpl264c0.cloudfront.net/objects/3e062abc864e593a0b82936c6208fabdb72ab1c3661a176a50d19225edd24194"
     - url: "https://do9h9xpl264c0.cloudfront.net/objects/af593084a57e7203401dc5b920d555ebe5125fcad6c40a5e6ad0c980c9401c60"

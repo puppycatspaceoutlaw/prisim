@@ -1,8 +1,6 @@
 ---
 title: "AI Morph"
 layout: full-mixed-external
-theme:
-    backgroundColor: black
 thumbnails:
     - url: "https://do9h9xpl264c0.cloudfront.net/objects/c506e514c6b81a693e1984f25ed44ae5da22bd11592ee498d752e9b3b53bd258"
     - url: "https://do9h9xpl264c0.cloudfront.net/objects/041647b85a4085eb7cb113fc912e68dc9e040afcb4377b98fb4efaa6a08917ca"

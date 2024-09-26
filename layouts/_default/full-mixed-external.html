@@ -19,6 +19,20 @@
             user-select: none;
         }
 
+        .background-video {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%) scale(1.5); /* Center and zoom */
+            object-fit: cover;
+            filter: blur(20px);
+            z-index: -1;
+        }
+
         .background-image {
             position: fixed;
             top: 0;
@@ -98,7 +112,7 @@
 
 <body>
     <div id="mediaContainer"></div>
-    <div class="background-image" id="backgroundImage"></div>
+    <div id="backgroundContainer"></div>
     <div class="preview-container" id="previewContainer">
         <div id="prevPreview" class="preview"></div>
         <div id="nextPreview" class="preview"></div>
@@ -106,6 +120,7 @@
 
     <script>
         const mediaContainer = document.getElementById("mediaContainer");
+        const backgroundContainer = document.getElementById("backgroundContainer");
         const prevPreview = document.getElementById("prevPreview");
         const nextPreview = document.getElementById("nextPreview");
         const previewContainer = document.getElementById("previewContainer");
@@ -113,8 +128,13 @@
         let currentIndex = 0;
         let hidePreviewsTimeout;
 
-        function setBackgroundImage(src) {
-            document.getElementById("backgroundImage").style.backgroundImage = `url('${src}')`;
+        function setBackgroundMedia(src) {
+            const fileExtension = src.split('.').pop().toLowerCase();
+            if (fileExtension === 'webm' || fileExtension === 'mp4') {
+                backgroundContainer.innerHTML = `<video class="background-video" autoplay muted loop><source src="${src}" type="video/${fileExtension}"></video>`;
+            } else {
+                backgroundContainer.innerHTML = `<div class="background-image" style="background-image: url('${src}')"></div>`;
+            }
         }
 
         function displayMedia(mediaUrl) {
@@ -124,7 +144,7 @@
             } else {
                 mediaContainer.innerHTML = `<img src="${mediaUrl}" alt="Gallery image" />`;
             }
-            setBackgroundImage(mediaUrl);
+            setBackgroundMedia(mediaUrl);
             updatePreviews();
             showPreviews();
         }

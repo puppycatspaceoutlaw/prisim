@@ -1,8 +1,6 @@
 ---
 title: "Kawaii"
 layout: full-mixed-external
-theme:
-  backgroundColor: black
 thumbnails:
   - url: "https://do9h9xpl264c0.cloudfront.net/objects/35928cea2d4ff2d24b7d0ef12e24aa7c4c6283483b5816995d6304bda5c296cb"
 
