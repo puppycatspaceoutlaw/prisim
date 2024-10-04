@@ -38,7 +38,8 @@ const MediaSearch = () => {
           (tags && tags.some(tag => tag.toLowerCase().includes(lowerCaseSearchTerm))) ||
           (collection && collection.toLowerCase().includes(lowerCaseSearchTerm))
         );
-      });
+      })
+    ;
 
     const uniqueResults = results.filter((value, index, self) =>
       index === self.findIndex((t) => (
@@ -46,9 +47,36 @@ const MediaSearch = () => {
       ))
     );
 
-    setFilteredMedia(uniqueResults);
+    const sortedResults = uniqueResults
+      .sort((a, b) => {
+        const an = a.name || '';
+        const bn = b.name || '';
+
+        return bn.localeCompare(an);
+      })
+      .sort((a, b) => {
+        const an = a.collection || '';
+        const bn = b.collection || '';
+
+        return an.localeCompare(bn);
+      })
+      .sort((a, b) => {
+        const ad = new Date(a.created_at || 0);
+        const bd = new Date(b.created_at || 0);
+
+        return bd - ad;
+      })
+      .sort((a, b) => {
+        const ar = a.rating || -1;
+        const br = b.rating || -1;
+
+        return br - ar;
+      })
+    ;
+
+    setFilteredMedia(sortedResults);
     setSearchParams({ searchTerm });
-    filteredMediaRef.current = uniqueResults;
+    filteredMediaRef.current = sortedResults;
   }, [searchTerm, media, setSearchParams]);
 
   useEffect(() => {

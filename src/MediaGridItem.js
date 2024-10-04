@@ -87,6 +87,7 @@ const MediaGridItem = ({ item }) => {
         <h2>{item.name}</h2>
         <p>{<span className='media-grid-item-metadata-tag'>{item.collection}</span>}</p>
         <p>{item && item.tags && item.tags.map(t => (<span key={t} className='media-grid-item-metadata-tag'>{t}</span>))}</p>
+        <p>{item && item.rating && <span>⭐️ {item.rating}</span>}</p>
       </div>
     </div>
   );
