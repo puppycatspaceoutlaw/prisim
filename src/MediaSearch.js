@@ -42,7 +42,7 @@ const MediaSearch = () => {
 
     const uniqueResults = results.filter((value, index, self) =>
       index === self.findIndex((t) => (
-        t.place === value.place && t.name === value.name
+        t.url === value.url
       ))
     );
 
