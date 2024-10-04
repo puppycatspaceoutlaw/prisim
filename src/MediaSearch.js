@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 import environment from './environment';
 
@@ -10,6 +10,7 @@ const MediaSearch = () => {
   const [media, setMedia] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredMedia, setFilteredMedia] = useState([]);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     const fetchMedia = async () => {
@@ -51,11 +52,23 @@ const MediaSearch = () => {
     setFilteredMedia(uniqueResults);
   }, [searchTerm, media]);
 
+  useEffect(() => {
+    if(!inputRef.current) return;
+    const listener = document.addEventListener('keydown', () => {
+      inputRef.current.focus()
+    });
+
+    return () => {
+      document.removeEventListener('keydown', listener);
+    }
+  }, [inputRef]);
+
   return (
     <div className='MediaSearch'>
       <br />
       <input
         type="text"
+        ref={inputRef} 
         placeholder="Search by name, tags, or collection"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
