@@ -1,0 +1,88 @@
+// MediaGridItem.js
+import React, { useEffect, useState } from 'react';
+
+const MediaPreview = ({ item, mediaType, isLoading }) => {
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (mediaType === 'image') {
+    return (
+      <div className="media-preview">
+        <img src={item.url} alt={item.name} style={{ maxWidth: '100%', height: 'auto' }} />
+      </div>
+    );
+  }
+
+  if (mediaType === 'video') {
+    return (
+      <div className="media-preview">
+        <video style={{ maxWidth: '100%', height: 'auto' }} autoPlay muted>
+          <source src={item.url} type="video/mp4" /> {/* Adjust type if necessary */}
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    );
+  }
+
+  return <p>Unsupported media type</p>;
+};
+
+const MediaGridItem = ({ item }) => {
+  const [mediaType, setMediaType] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchMediaType = async () => {
+      if(item.type === 'video' || item.url.endsWith('.webm') || item.url.endsWith('.mp4')) {
+        setMediaType('video');
+        setIsLoading(false);
+        return;
+      }
+
+      if(item.type === 'image' || item.url.endsWith('.png') || item.url.endsWith('.jpg') || item.url.endsWith('.jpeg')) {
+        setMediaType('image');
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch(item.url, { method: 'HEAD' }); // Use HEAD to get headers only
+        const contentType = response.headers.get('content-type');
+
+        if (contentType) {
+          if (contentType.startsWith('image/')) {
+            setMediaType('image');
+          } else if (contentType.startsWith('video/')) {
+            setMediaType('video');
+          } else {
+            setMediaType('other'); // Handle other content types if needed
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching media type:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchMediaType();
+  }, [item.url]);
+
+  const openUrl = (url) => () => {
+    window.open(url, '_blank');
+  };
+
+  return (
+    <div className="media-grid-item" onClick={openUrl(item.url)}>
+      <MediaPreview item={item} mediaType={mediaType} isLoading={isLoading} />
+      <div className="media-grid-item-metadata">
+        <h2>{item.name}</h2>
+        <p>Collection: {item.collection}</p>
+        <p>Tags: {item.tags.join(', ')}</p>
+      </div>
+    </div>
+  );
+};
+
+export default MediaGridItem;
