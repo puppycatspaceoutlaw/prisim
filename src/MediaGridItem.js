@@ -1,5 +1,7 @@
 // MediaGridItem.js
 import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate } from "react-router-dom";
+
 
 const MediaPreview = ({ item, mediaType, isLoading }) => {
   if (isLoading) {
@@ -32,6 +34,7 @@ const MediaGridItem = ({ item }) => {
   const [mediaType, setMediaType] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const mediaPreviewRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!mediaPreviewRef.current) return;
@@ -88,7 +91,7 @@ const MediaGridItem = ({ item }) => {
   }, [item.url, item.type, mediaPreviewRef]);
 
   const openUrl = (url) => () => {
-    window.open(url, '_blank');
+    navigate(`/view?url=${url}`, { state: { item } });
   };
 
   return (

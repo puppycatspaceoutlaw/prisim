@@ -1,12 +1,13 @@
+import './MediaSearch.css';
 import React, { useEffect, useState, useRef } from 'react';
-
 import environment from './environment';
 
-import './MediaSearch.css';
+import { useNavigate } from "react-router-dom";
 
 import MediaGridItem from './MediaGridItem';
 
 const MediaSearch = () => {
+  const navigate = useNavigate();
   const [media, setMedia] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredMedia, setFilteredMedia] = useState([]);
@@ -54,14 +55,26 @@ const MediaSearch = () => {
 
   useEffect(() => {
     if(!inputRef.current) return;
-    const listener = document.addEventListener('keydown', () => {
-      inputRef.current.focus()
+    const listener = document.addEventListener('keydown', (e) => {
+      if(inputRef.current) {
+
+        if (e.key === 'Enter') {
+          if (filteredMedia.length === 0) return;
+          navigate('/view?url=' + filteredMedia[0].url);
+        }
+
+        if (e.key === 'Escape') {
+          setSearchTerm('');
+        }
+
+        inputRef.current.focus()
+      }
     });
 
     return () => {
       document.removeEventListener('keydown', listener);
     }
-  }, [inputRef]);
+  }, [navigate, filteredMedia, searchTerm]);
 
   return (
     <div className='MediaSearch'>

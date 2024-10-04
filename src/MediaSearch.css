@@ -4,4 +4,14 @@
     border: 3px solid #b200ff;
     border-radius: 10px;
     width: 80%;
+    color: purple
+}
+
+.MediaSearch {
+    background-color: #2E073F;
+    color: #EBD3F8;
+}
+
+.MediaSearch * {
+    color: #EBD3F8;
 }

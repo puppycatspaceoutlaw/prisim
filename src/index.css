@@ -95,10 +95,10 @@ code {
 }
 
 .media-grid-item-metadata-tag {
-  border-radius: 12px; /* Rounded corners */
+  border-radius: 4px; /* Rounded corners */
   padding: 5px 10px; /* Add padding to the label */
-  margin: 5px 5px; /* Margin for spacing */
+  margin: 5px 0; /* Margin for spacing */
   background-color: rgb(255, 255, 255); /* Optional: light background for the label */
-  color: rgb(0, 0, 0); /* Text color */
+  color: white; /* Text color */
   display: inline-block; /* Makes the border wrap tightly around the text */
 }
