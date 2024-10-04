@@ -42,7 +42,7 @@ const MediaSearch = () => {
 
     const uniqueResults = results.filter((value, index, self) =>
       index === self.findIndex((t) => (
-        t.url === value.url
+        t.key === value.key
       ))
     );
 
@@ -89,7 +89,7 @@ const MediaSearch = () => {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       <div className="media-grid">
-        {filteredMedia.map((item, index) => (<MediaGridItem key={index} item={item} />))}
+        {filteredMedia.map((item, index) => (<MediaGridItem key={item.key} item={item} />))}
       </div>
     </div>
   );
