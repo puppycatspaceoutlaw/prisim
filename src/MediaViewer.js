@@ -40,7 +40,7 @@ const MediaViewer = () => {
             setType('video');
         };
         video.onerror = () => {
-            alert('failed to load media!')
+
         };
     };
   }, [url]);

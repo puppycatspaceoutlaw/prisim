@@ -59,7 +59,7 @@ const MediaGridItem = ({ item }) => {
                   setIsLoading(false);
                 };
                 video.onerror = () => {
-                    alert('failed to load media!')
+
                 };
             };
         };
