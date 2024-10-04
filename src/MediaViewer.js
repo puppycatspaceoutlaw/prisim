@@ -48,7 +48,7 @@ const MediaViewer = () => {
   return (
     <div className='MediaViewer'>
         <div className="mediaContainer">
-            { type === 'image' && <img src={url} /> }
+            { type === 'image' && <img src={url} alt={"Prism Gallery Item"} /> }
             { type === 'video' && <video autoPlay muted loop><source src={url} type="video/webm" /></video> }
         </div>
         <div className="backgroundContainer">

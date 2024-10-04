@@ -6,17 +6,19 @@ import MediaViewer from './MediaViewer';
 
 function App() {
   return (
-    <HashRouter>
-      <Routes>
-        <Route path="/" element={
-          <div className="App">
-            <MediaSearch />
-          </div>
-        } />
-        <Route path="/view" element={<MediaViewer />} />
-        <Route path="*" element={<h1>Not Found</h1>} />
-      </Routes>
-    </HashRouter>
+    <div data-testid='PrismApp'>
+      <HashRouter>
+        <Routes>
+          <Route path="/" element={
+            <div className="App">
+              <MediaSearch />
+            </div>
+          } />
+          <Route path="/view" element={<MediaViewer />} />
+          <Route path="*" element={<h1>Not Found</h1>} />
+        </Routes>
+      </HashRouter>
+    </div>
   );
 }
 

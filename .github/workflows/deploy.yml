@@ -11,22 +11,26 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '14' # Specify your Node.js version here
+          node-version: '20'
 
       - name: Install dependencies
         run: |
-          cd my-app
-          npm install
+          npm ci
+          
+      - name: Test
+        run: |
+          npm test
 
       - name: Build
         run: |
-          cd my-app
-          PUBLIC_URL=https://puppycatspaceoutlaw.github.io/prism/ npm run build
+          export PUBLIC_URL=https://puppycatspaceoutlaw.github.io/prism/ 
+          npm run build
+      
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
