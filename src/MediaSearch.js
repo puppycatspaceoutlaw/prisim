@@ -34,9 +34,9 @@ const MediaSearch = () => {
         const { name, tags, collection } = item;
         const lowerCaseSearchTerm = searchTerm.toLowerCase();
         return (
-          name.toLowerCase().includes(lowerCaseSearchTerm) ||
-          tags.some(tag => tag.toLowerCase().includes(lowerCaseSearchTerm)) ||
-          collection.toLowerCase().includes(lowerCaseSearchTerm)
+          name && name.toLowerCase().includes(lowerCaseSearchTerm) ||
+          tags && tags.some(tag => tag.toLowerCase().includes(lowerCaseSearchTerm)) ||
+          collection && collection.toLowerCase().includes(lowerCaseSearchTerm)
         );
       });
 
