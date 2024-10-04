@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import environment from './environment';
 
+import './MediaSearch.css';
+
 import MediaGridItem from './MediaGridItem';
 
 const MediaSearch = () => {
@@ -50,8 +52,8 @@ const MediaSearch = () => {
   }, [searchTerm, media]);
 
   return (
-    <div>
-      <h1>Prism Search</h1>
+    <div className='MediaSearch'>
+      <br />
       <input
         type="text"
         placeholder="Search by name, tags, or collection"

@@ -69,7 +69,7 @@ const MediaGridItem = ({ item }) => {
     };
 
     fetchMediaType();
-  }, [item.url]);
+  }, [item.url, item.type]);
 
   const openUrl = (url) => () => {
     window.open(url, '_blank');
