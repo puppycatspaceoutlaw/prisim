@@ -49,6 +49,7 @@ code {
   aspect-ratio: 9 / 16;
   overflow: hidden;
   position: relative;
+ 
 }
 
 .media-grid-item a {
@@ -69,10 +70,10 @@ code {
   position: absolute;
   bottom: -100%;
   width: 100%;
-  margin-bottom: 10px;
   background-color: rgba(0, 0, 0, 0.5);
   transition: bottom 0.5s ease;
 }
+
 
 .media-grid-item:hover .media-grid-item-metadata {
   bottom: 0;
@@ -83,8 +84,13 @@ code {
   width: 100%; /* Ensures full width */
   height: 100%; /* Ensures full height */
   overflow: hidden; /* Prevents overflow from images */
+  transition: transform 0.5s ease;
 }
 
+.media-grid-item:hover .media-preview {
+  /* zoom in effect */
+  transform: scale(1.1);
+}
 
 .media-preview img,
 .media-preview video {
@@ -98,7 +104,7 @@ code {
   border-radius: 4px; /* Rounded corners */
   padding: 5px 10px; /* Add padding to the label */
   margin: 5px 0; /* Margin for spacing */
-  background-color: rgb(255, 255, 255); /* Optional: light background for the label */
-  color: white; /* Text color */
+  background-color: rgb(195, 3, 96); /* Optional: light background for the label */
+  color: rgb(0, 0, 0); /* Text color */
   display: inline-block; /* Makes the border wrap tightly around the text */
 }
