@@ -38,6 +38,7 @@ code {
   padding: 15px;
 }
 
+
 .media-grid-item {
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 16px;
@@ -107,4 +108,14 @@ code {
   background-color: rgb(195, 3, 96); /* Optional: light background for the label */
   color: rgb(0, 0, 0); /* Text color */
   display: inline-block; /* Makes the border wrap tightly around the text */
+}
+
+/* if small screen then remove padding */
+@media (max-width: 768px) {
+  .media-grid {
+    padding: 0;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 0fr));
+    gap: 0;
+  }
+
 }
