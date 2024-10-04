@@ -9,7 +9,7 @@ const MediaPreview = ({ item, mediaType, isLoading }) => {
   if (mediaType === 'image') {
     return (
       <div className="media-preview">
-        <img src={item.url} alt={item.name} style={{ maxWidth: '100%', height: 'auto' }} />
+        <img src={item.url} alt={item.name} />
       </div>
     );
   }
@@ -17,7 +17,7 @@ const MediaPreview = ({ item, mediaType, isLoading }) => {
   if (mediaType === 'video') {
     return (
       <div className="media-preview">
-        <video style={{ maxWidth: '100%', height: 'auto' }} autoPlay muted>
+        <video autoPlay muted loop>
           <source src={item.url} type="video/mp4" /> {/* Adjust type if necessary */}
           Your browser does not support the video tag.
         </video>
@@ -34,18 +34,20 @@ const MediaGridItem = ({ item }) => {
 
   useEffect(() => {
     const fetchMediaType = async () => {
-      if(item.type === 'video' || item.url.endsWith('.webm') || item.url.endsWith('.mp4')) {
+      // Check if item.type or URL ends with specific extensions
+      if (item.type === 'video' || item.url.endsWith('.webm') || item.url.endsWith('.mp4')) {
         setMediaType('video');
         setIsLoading(false);
         return;
       }
 
-      if(item.type === 'image' || item.url.endsWith('.png') || item.url.endsWith('.jpg') || item.url.endsWith('.jpeg')) {
+      if (item.type === 'image' || item.url.endsWith('.png') || item.url.endsWith('.jpg') || item.url.endsWith('.jpeg')) {
         setMediaType('image');
         setIsLoading(false);
         return;
       }
 
+      // Fetch media type using HEAD request
       try {
         const response = await fetch(item.url, { method: 'HEAD' }); // Use HEAD to get headers only
         const contentType = response.headers.get('content-type');
@@ -78,8 +80,8 @@ const MediaGridItem = ({ item }) => {
       <MediaPreview item={item} mediaType={mediaType} isLoading={isLoading} />
       <div className="media-grid-item-metadata">
         <h2>{item.name}</h2>
-        <p>Collection: {item.collection}</p>
-        <p>Tags: {item.tags.join(', ')}</p>
+        <p>{<span className='media-grid-item-metadata-tag'>{item.collection}</span>}</p>
+        <p>{item.tags.map(t => (<span className='media-grid-item-metadata-tag'>{t}</span>))}</p>
       </div>
     </div>
   );

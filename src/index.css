@@ -7,6 +7,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body, html {
+  background-color: #2E073F;
+  color: #EBD3F8;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -26,7 +31,6 @@ code {
   border-radius: 4px;
   font-size: 16px;
 }
-
 .media-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
@@ -35,14 +39,14 @@ code {
 }
 
 .media-grid-item {
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   border-radius: 8px;
   padding: 15px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start; /* Ensures the content aligns at the top */
   text-align: center;
-  min-height: 200px;
+  aspect-ratio: 9 / 16;
   overflow: hidden;
   position: relative;
 }
@@ -66,18 +70,35 @@ code {
   bottom: -100%;
   width: 100%;
   margin-bottom: 10px;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   transition: bottom 0.5s ease;
 }
 
 .media-grid-item:hover .media-grid-item-metadata {
   bottom: 0;
-  transition: bottom 0.5s ease;
 }
 
-.media-preview img {
+.media-preview {
+  position: relative;
+  width: 100%; /* Ensures full width */
+  height: 100%; /* Ensures full height */
+  overflow: hidden; /* Prevents overflow from images */
+}
+
+
+.media-preview img,
+.media-preview video {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: 100%; /* Ensure they fill the parent */
+  object-fit: cover; /* Maintain aspect ratio and cover the area */
   border-radius: 4px;
+}
+
+.media-grid-item-metadata-tag {
+  border-radius: 12px; /* Rounded corners */
+  padding: 5px 10px; /* Add padding to the label */
+  margin: 5px 5px; /* Margin for spacing */
+  background-color: rgb(255, 255, 255); /* Optional: light background for the label */
+  color: rgb(0, 0, 0); /* Text color */
+  display: inline-block; /* Makes the border wrap tightly around the text */
 }
