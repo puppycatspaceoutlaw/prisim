@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './MediaViewer.css';
 
@@ -7,6 +7,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 const MediaViewer = () => {
   let location = useLocation();
   let navigate = useNavigate();
+
+  const [ type, setType ] = useState(null);
 
   let params = new URLSearchParams(location.search);
 
@@ -24,13 +26,34 @@ const MediaViewer = () => {
     };
   }, [navigate]);
 
+  useEffect(() => {
+    const img = new Image();
+    img.src = url;
+    img.onload = () => {
+      setType('image');
+    };
+    img.onerror = () => {
+        // try to load url as video
+        const video = document.createElement('video');
+        video.src = url;
+        video.onloadeddata = () => {
+            setType('video');
+        };
+        video.onerror = () => {
+            alert('failed to load media!')
+        };
+    };
+  }, [url]);
+
   return (
     <div className='MediaViewer'>
         <div className="mediaContainer">
-            <img src={url} />
+            { type === 'image' && <img src={url} /> }
+            { type === 'video' && <video autoPlay muted loop><source src={url} type="video/webm" /></video> }
         </div>
         <div className="backgroundContainer">
-            <div className="background-image" style={{"backgroundImage": `url('${url}')`}}></div>
+            { type === 'image' && <div className="background-image" style={{"backgroundImage": `url('${url}')`}}></div> }
+            { type === 'video' && <video class="background-video" autoPlay muted loop><source src={url} type="video/webm" /></video> }
         </div>
         
     </div>

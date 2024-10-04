@@ -1,9 +1,7 @@
 import './MediaSearch.css';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import environment from './environment';
-
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, useSearchParams } from "react-router-dom";
 import MediaGridItem from './MediaGridItem';
 
 const MediaSearch = () => {
@@ -12,14 +10,16 @@ const MediaSearch = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredMedia, setFilteredMedia] = useState([]);
   const inputRef = useRef(null);
+  const filteredMediaRef = useRef([]);
+  let [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     const fetchMedia = async () => {
       try {
-        const response = await fetch(environment.media_collection_url); // Replace with your JSON URL
+        const response = await fetch(environment.media_collection_url);
         const data = await response.json();
         setMedia(data.media);
-        setFilteredMedia(data.media); // Initialize filtered media with all media items
+        setFilteredMedia(data.media);
       } catch (error) {
         console.error('Error fetching the media:', error);
       }
@@ -28,53 +28,55 @@ const MediaSearch = () => {
     fetchMedia();
   }, []);
 
-  useEffect(() => {
-    // Filter media based on search term
+  const filterMedia = useCallback(() => {
     const results = media
       .filter(item => {
         const { name, tags, collection } = item;
         const lowerCaseSearchTerm = searchTerm.toLowerCase();
-
-        // Check if name, tags, or collection match the search term
         return (
           name.toLowerCase().includes(lowerCaseSearchTerm) ||
           tags.some(tag => tag.toLowerCase().includes(lowerCaseSearchTerm)) ||
           collection.toLowerCase().includes(lowerCaseSearchTerm)
         );
-      })
-    ;
+      });
 
     const uniqueResults = results.filter((value, index, self) =>
       index === self.findIndex((t) => (
         t.place === value.place && t.name === value.name
       ))
-    )
+    );
 
     setFilteredMedia(uniqueResults);
+    setSearchParams({ searchTerm });
+    filteredMediaRef.current = uniqueResults;
   }, [searchTerm, media]);
 
   useEffect(() => {
-    if(!inputRef.current) return;
-    const listener = document.addEventListener('keydown', (e) => {
-      if(inputRef.current) {
+    filterMedia();
+  }, [filterMedia]);
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (inputRef.current) {
         if (e.key === 'Enter') {
-          if (filteredMedia.length === 0) return;
-          navigate('/view?url=' + filteredMedia[0].url);
-        }
-
-        if (e.key === 'Escape') {
+          if (filteredMediaRef.current.length > 0) {
+            navigate('/view?url=' + filteredMediaRef.current[0].url);
+          }
+        } else if (e.key === 'Escape') {
           setSearchTerm('');
         }
 
-        inputRef.current.focus()
+
+        inputRef.current.focus();
       }
-    });
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
 
     return () => {
-      document.removeEventListener('keydown', listener);
-    }
-  }, [navigate, filteredMedia, searchTerm]);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [navigate]);
 
   return (
     <div className='MediaSearch'>
