@@ -1,11 +1,16 @@
-// MediaGridItem.js
+import './MediaGridItem.css';
+
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 
 
 const MediaPreview = ({ item, mediaType, isLoading, index }) => {
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <div className='MediaPreview__Loader'>
+        <i className='fa fa-spinner fa-spin'></i>
+      </div>
+    );
   }
 
   if (mediaType === 'image') {
@@ -84,7 +89,7 @@ const MediaGridItem = ({ item, index }) => {
   };
 
   return (
-    <div className="media-grid-item" onClick={openUrl(item)} ref={mediaPreviewRef} >
+    <div className="MediaGridItem media-grid-item" onClick={openUrl(item)} ref={mediaPreviewRef} >
       <MediaPreview item={item} mediaType={mediaType} isLoading={isLoading} />
       <div className="media-grid-item-metadata">
         <h2>{item.name}</h2>
