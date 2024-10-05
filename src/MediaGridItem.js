@@ -42,7 +42,6 @@ const MediaGridItem = ({ item, index }) => {
     const mediaPreviewRefCurrent = mediaPreviewRef.current;
 
     const fetchMediaType = () => {
-      console.log('fetchMediaType', item.name);
       const img = new Image();
       img.src = item.url;
       img.onload = () => {
