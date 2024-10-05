@@ -4,7 +4,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 
 
-const MediaPreview = ({ item, mediaType, isLoading, index }) => {
+const MediaPreview = ({ item, mediaType, isLoading, index, highlighted }) => {
   if (isLoading) {
     return (
       <div className='MediaPreview__Loader'></div>
@@ -21,7 +21,7 @@ const MediaPreview = ({ item, mediaType, isLoading, index }) => {
 
   if (mediaType === 'video') {
     return (
-      <div className="MediaPreview media-preview">
+      <div className="media-preview">
         <video autoPlay muted loop>
           <source src={item.url} type="video/mp4" /> {/* Adjust type if necessary */}
           Your browser does not support the video tag.
@@ -87,7 +87,7 @@ const MediaGridItem = ({ item, index }) => {
   };
 
   return (
-    <div className="MediaGridItem media-grid-item" onClick={openUrl(item)} ref={mediaPreviewRef} >
+    <div className='MediaGridItem media-grid-item media-grid-item--highlighted' onClick={openUrl(item)} ref={mediaPreviewRef} >
       <MediaPreview item={item} mediaType={mediaType} isLoading={isLoading} />
       <div className="media-grid-item-metadata">
         <h2>{item.name}</h2>
