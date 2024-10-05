@@ -117,7 +117,7 @@ const MediaSearch = () => {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       <div className="media-grid">
-        {filteredMedia.map((item, index) => (<MediaGridItem key={item.key} item={item} />))}
+        {filteredMedia.map((item, index) => (<MediaGridItem key={item.key} item={item} index={index} />))}
       </div>
     </div>
   );

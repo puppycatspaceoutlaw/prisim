@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 
 
-const MediaPreview = ({ item, mediaType, isLoading }) => {
+const MediaPreview = ({ item, mediaType, isLoading, index }) => {
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -30,7 +30,7 @@ const MediaPreview = ({ item, mediaType, isLoading }) => {
   return <p>Unsupported media type</p>;
 };
 
-const MediaGridItem = ({ item }) => {
+const MediaGridItem = ({ item, index }) => {
   const [mediaType, setMediaType] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const mediaPreviewRef = useRef(null);
@@ -41,32 +41,36 @@ const MediaGridItem = ({ item }) => {
 
     const mediaPreviewRefCurrent = mediaPreviewRef.current;
 
+    const fetchMediaType = () => {
+      console.log('fetchMediaType', item.name);
+      const img = new Image();
+      img.src = item.url;
+      img.onload = () => {
+        setMediaType('image');
+        setIsLoading(false);
+      };
+      img.onerror = () => {
+          // try to load url as video
+          const video = document.createElement('video');
+          video.src = item.url;
+          video.onloadeddata = () => {
+            setMediaType('video');
+            setIsLoading(false);
+          };
+          video.onerror = () => {
+
+          };
+      };
+    };
+
+    if(index <= 15) {
+      fetchMediaType();
+    }
+
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
-        const fetchMediaType = () => {
-            const img = new Image();
-            img.src = item.url;
-            img.onload = () => {
-              setMediaType('image');
-              setIsLoading(false);
-            };
-            img.onerror = () => {
-                // try to load url as video
-                const video = document.createElement('video');
-                video.src = item.url;
-                video.onloadeddata = () => {
-                  setMediaType('video');
-                  setIsLoading(false);
-                };
-                video.onerror = () => {
-
-                };
-            };
-        };
-
         fetchMediaType();
       }
-
     });
 
     observer.observe(mediaPreviewRefCurrent);
@@ -74,7 +78,7 @@ const MediaGridItem = ({ item }) => {
     return () => {
       observer.unobserve(mediaPreviewRefCurrent);
     };
-  }, [item.url, item.type, mediaPreviewRef]);
+  }, [item.url, item.type, mediaPreviewRef, index]);
 
   const openUrl = (item) => () => {
     navigate(`/view?url=${item.url}`, { state: { item } });
