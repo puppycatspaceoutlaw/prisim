@@ -21,7 +21,7 @@ const MediaPreview = ({ item, mediaType, isLoading, index }) => {
 
   if (mediaType === 'video') {
     return (
-      <div className="media-preview">
+      <div className="MediaPreview media-preview">
         <video autoPlay muted loop>
           <source src={item.url} type="video/mp4" /> {/* Adjust type if necessary */}
           Your browser does not support the video tag.

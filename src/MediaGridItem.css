@@ -37,3 +37,17 @@
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.05);
 }
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.MediaGridItem  .media-preview{
+    animation: fadeIn 0.1s ease-in forwards;
+}
