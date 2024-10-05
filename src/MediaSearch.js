@@ -11,7 +11,7 @@ const MediaSearch = () => {
   const [filteredMedia, setFilteredMedia] = useState([]);
   const inputRef = useRef(null);
   const filteredMediaRef = useRef([]);
-  let [, setSearchParams] = useSearchParams();
+  let [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     const fetchMedia = async () => {

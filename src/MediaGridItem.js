@@ -7,9 +7,7 @@ import { useNavigate } from "react-router-dom";
 const MediaPreview = ({ item, mediaType, isLoading, index }) => {
   if (isLoading) {
     return (
-      <div className='MediaPreview__Loader'>
-        <i className='fa fa-spinner fa-spin'></i>
-      </div>
+      <div className='MediaPreview__Loader'></div>
     );
   }
 
