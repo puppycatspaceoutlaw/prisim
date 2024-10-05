@@ -66,6 +66,10 @@ code {
   background-color: #0056b3;
 }
 
+.media-grid-item--highlighted {
+  border: 4px solid #b200ff;
+}
+
 .media-grid-item-metadata {
   display: block;
   position: absolute;

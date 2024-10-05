@@ -9,6 +9,7 @@ const MediaSearch = () => {
   const [media, setMedia] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredMedia, setFilteredMedia] = useState([]);
+  const [highlightedIndex, setHighlightedIndex] = useState(1);
   const inputRef = useRef(null);
   const filteredMediaRef = useRef([]);
   let [, setSearchParams] = useSearchParams();
@@ -92,8 +93,18 @@ const MediaSearch = () => {
           }
         } else if (e.key === 'Escape') {
           setSearchTerm('');
-        }
+        } else if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+          // count how many elements are in a row
+          const mediaGrid = document.querySelector('.media-grid');
+          const mediaGridItem = document.querySelector('.media-grid-item');
+          const mediaGridItemStyle = window.getComputedStyle(mediaGridItem);
+          const mediaGridItemWidth = mediaGridItem.offsetWidth + parseInt(mediaGridItemStyle.marginRight, 10);
+          const mediaGridWidth = mediaGrid.offsetWidth;
+          const mediaGridItemCount = Math.floor(mediaGridWidth / mediaGridItemWidth);
 
+          console.log('mediaGridItemCount', mediaGridItemCount);
+          alert('mediaGridItemCount: ' + mediaGridItemCount);
+        }
 
         inputRef.current.focus();
       }
@@ -117,7 +128,7 @@ const MediaSearch = () => {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       <div className="media-grid">
-        {filteredMedia.map((item, index) => (<MediaGridItem key={item.key} item={item} index={index} />))}
+        {filteredMedia.map((item, index) => (<MediaGridItem key={item.key} item={item} index={index} highlight={index === highlightedIndex} />))}
       </div>
     </div>
   );
